@@ -1,0 +1,11 @@
+lxd-ipvlan-neigh-sync (1.0-1) UNRELEASED; urgency=low
+
+  * Initial release
+
+ -- s3rj1k <evasive.gyron@gmail.com>  Mon, 13 Jul 2020 16:50:00 +0200
+
+lxd-ipvlan-neigh-sync (1.0-0) UNRELEASED; urgency=low
+
+  * Stub release
+
+ -- s3rj1k <evasive.gyron@gmail.com>  Mon, 13 Jul 2020 11:50:00 +0200

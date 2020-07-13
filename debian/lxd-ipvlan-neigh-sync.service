@@ -1,0 +1,17 @@
+[Unit]
+Description=LXD IPVLAN neighbours synchronization service
+After=network.target
+
+[Service]
+Type=simple
+
+ExecStart=/usr/sbin/lxd-ipvlan-neigh-sync
+
+Restart=on-failure
+RestartSec=10
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

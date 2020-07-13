@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with systemd
+
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip
+
+override_dh_auto_install:
+	dh_install lxd-ipvlan-neigh-sync usr/sbin

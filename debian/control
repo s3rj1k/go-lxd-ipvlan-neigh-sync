@@ -1,0 +1,12 @@
+Source: lxd-ipvlan-neigh-sync
+Section: net
+Priority: optional
+Maintainer: s3rj1k <evasive.gyron@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+
+Package: lxd-ipvlan-neigh-sync
+Architecture: amd64
+Depends: ${shlibs:Depends}
+Description: LXD IPVLAN neighbours sync
+ This package contains LXD IPVLAN neighbours synchronization daemon.

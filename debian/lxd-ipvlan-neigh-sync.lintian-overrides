@@ -1,0 +1,8 @@
+lxd-ipvlan-neigh-sync: hardening-no-relro *
+lxd-ipvlan-neigh-sync: hardening-no-pie *
+lxd-ipvlan-neigh-sync: binary-without-manpage *
+lxd-ipvlan-neigh-sync: new-package-should-close-itp-bug
+lxd-ipvlan-neigh-sync: description-is-pkg-name *
+lxd-ipvlan-neigh-sync: init.d-script-does-not-implement-required-option *
+lxd-ipvlan-neigh-sync: init.d-script-not-included-in-package etc/init.d/lxd-ipvlan-neigh-sync
+lxd-ipvlan-neigh-sync: statically-linked-binary usr/sbin/lxd-ipvlan-neigh-sync
