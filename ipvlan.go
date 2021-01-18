@@ -52,12 +52,6 @@ func (neigh *IPVlanNeigh) GetLinkIndex() (int, error) {
 
 // GetIPVlanNeigh returns ProxyARP(NDP) table entries.
 func GetIPVlanNeigh(linkName string) (*IPVlanNeigh, error) {
-	// create ProxyARP(NDP) table object
-	out := InitIPVlanNeigh()
-
-	// set network interface name
-	out.LinkName = strings.TrimSpace(linkName)
-
 	// set connection properties
 	connArgs := &lxd.ConnectionArgs{
 		// custom HTTP Client (used as base for the connection)
@@ -84,6 +78,21 @@ func GetIPVlanNeigh(linkName string) (*IPVlanNeigh, error) {
 	containers, err = conn.GetContainersFull()
 	if err != nil {
 		return nil, fmt.Errorf("lxd data error: %w", err)
+	}
+
+	return ExtractIPVlanNeigh(linkName, containers), nil
+}
+
+func ExtractIPVlanNeigh(linkName string, containers []api.ContainerFull) *IPVlanNeigh {
+	// create ProxyARP(NDP) table object
+	out := InitIPVlanNeigh()
+
+	// set network interface name
+	out.LinkName = strings.TrimSpace(linkName)
+
+	// define split function for ip strings
+	fieldFunc := func(c rune) bool {
+		return c == (',') || c == (' ')
 	}
 
 	// process all containers information
@@ -132,7 +141,7 @@ func GetIPVlanNeigh(linkName string) (*IPVlanNeigh, error) {
 			}
 
 			// append IPv4 to output table
-			for _, el := range strings.Fields(v4Address) {
+			for _, el := range strings.FieldsFunc(v4Address, fieldFunc) {
 				if ip := net.ParseIP(el); ip != nil {
 					out.IP[ip.String()] = ip
 				}
@@ -145,7 +154,7 @@ func GetIPVlanNeigh(linkName string) (*IPVlanNeigh, error) {
 			}
 
 			// append IPv6 to output table
-			for _, el := range strings.Fields(v6Address) {
+			for _, el := range strings.FieldsFunc(v6Address, fieldFunc) {
 				if ip := net.ParseIP(el); ip != nil {
 					out.IP[ip.String()] = ip
 				}
@@ -153,5 +162,5 @@ func GetIPVlanNeigh(linkName string) (*IPVlanNeigh, error) {
 		}
 	}
 
-	return out, nil
+	return out
 }
